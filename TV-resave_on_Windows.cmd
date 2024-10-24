@@ -9,6 +9,7 @@ echo/
 
 set /p extm3u=< %loganet_path%\LoganetXAll.m3u
 >%final_file% echo %extm3u%
+<nul set /p =%final_file% created
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 (for %%n in (%loganet_playlists%) do (
@@ -17,3 +18,4 @@ SETLOCAL ENABLEDELAYEDEXPANSION
         echo %%r
     )
 ))>>%final_file%
+echo: and filled with channels
