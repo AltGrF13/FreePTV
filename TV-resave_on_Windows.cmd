@@ -7,8 +7,10 @@ cd /d %loganet_path%
 git pull
 echo/
 
+rem #EXTM3U from LoganetXAll
 set /p extm3u=< %loganet_path%\LoganetXAll.m3u
 >%final_file% echo %extm3u%
+rem echo without newline
 <nul set /p =%final_file% created
 
 SETLOCAL ENABLEDELAYEDEXPANSION
