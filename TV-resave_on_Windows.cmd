@@ -24,7 +24,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 			rem problem with ampersand
 			set "row=!row:&=!"
 
-			echo:!row!| findstr /i /r "[248]k\s*$ hd\s*$" >nul 2>&1
+			echo:!row!| findstr /i /r /c:"[248]k[ ]*$" /c:"hd[ ]*$" >nul 2>&1
 			if errorlevel 1 (
 				set "is_quality="
 			) else (
