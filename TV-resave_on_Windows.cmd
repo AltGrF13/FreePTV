@@ -1,6 +1,7 @@
 @echo off
 set "loganet_path=d:\Project\LoganetXIPTV"
 set "loganet_playlists=LoganetXAll"
+set "black_list=Общие Детские Новости Политические Хобби Религия Спорт Музыка"
 set "final_file=\\192.168.1.1\Flash\IPTV.m3u8"
 
 cd /d %loganet_path%
@@ -26,15 +27,23 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 			echo:!row!| findstr /i /r /c:"[248]k[ ]*$" /c:"hd[ ]*$" >nul 2>&1
 			if errorlevel 1 (
-				set "is_quality="
+				set "is_filtered="
 			) else (
-				set "is_quality=true"
+				set "is_filtered=true"
 
-				set /a "channels_count=!channels_count!+1"
+				(for %%w in (%black_list%) do (
+					if not "x!row:%%w=!"=="x!row!" (
+						set "is_filtered="
+					)
+				))
+
+				if defined is_filtered (
+					set /a "channels_count=!channels_count!+1"
+				)
 			)
 		)
 
-		if defined is_quality (
+		if defined is_filtered (
 			echo:%%r
 		)
 	)
