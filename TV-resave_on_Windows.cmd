@@ -13,6 +13,7 @@ set /p extm3u=< %loganet_path%\LoganetXAll.m3u
 rem echo without newline
 <nul set /p =%final_file% created
 
+set /a "channels_count=0"
 SETLOCAL ENABLEDELAYEDEXPANSION
 (for %%n in (%loganet_playlists%) do (
 	set "playlist_path=%loganet_path%\%%n.m3u"
@@ -28,6 +29,8 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 				set "is_quality="
 			) else (
 				set "is_quality=true"
+
+				set /a "channels_count=!channels_count!+1"
 			)
 		)
 
@@ -36,4 +39,4 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 		)
 	)
 ))>>%final_file%
-echo: and filled with channels
+echo: and filled with !channels_count! channels
