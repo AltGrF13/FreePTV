@@ -15,25 +15,25 @@ rem echo without newline
 
 SETLOCAL ENABLEDELAYEDEXPANSION
 (for %%n in (%loganet_playlists%) do (
-    set "playlist_path=%loganet_path%\%%n.m3u"
-    for /f "skip=1 delims=" %%r in (!playlist_path!) do (
-        set "row=%%r"
+	set "playlist_path=%loganet_path%\%%n.m3u"
+	for /f "skip=1 delims=" %%r in (!playlist_path!) do (
+		set "row=%%r"
 
-        if "!row:~0,7!"=="#EXTINF" (
-            rem problem with ampersand
-            set "row=!row:&=!"
+		if "!row:~0,7!"=="#EXTINF" (
+			rem problem with ampersand
+			set "row=!row:&=!"
 
-            echo:!row!| findstr /i /r "[248]k\s*$ hd\s*$" >nul 2>&1
-            if errorlevel 1 (
-                set "is_quality="
-            ) else (
-                set "is_quality=true"
-            )
-        )
+			echo:!row!| findstr /i /r "[248]k\s*$ hd\s*$" >nul 2>&1
+			if errorlevel 1 (
+				set "is_quality="
+			) else (
+				set "is_quality=true"
+			)
+		)
 
-        if defined is_quality (
-            echo:%%r
-        )
-    )
+		if defined is_quality (
+			echo:%%r
+		)
+	)
 ))>>%final_file%
 echo: and filled with channels
