@@ -1,7 +1,7 @@
 @echo off
 set "loganet_path=d:\Project\LoganetXIPTV"
 set "loganet_playlists=LoganetXMovie LoganetXInfo"
-set "final_file=\\ROUTER\Flash\IPTV.m3u8"
+set "final_file=\\192.168.1.1\Flash\IPTV.m3u8"
 
 cd /d %loganet_path%
 git pull
