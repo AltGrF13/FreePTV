@@ -31,11 +31,11 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 			) else (
 				set "is_filtered=true"
 
-				(for %%w in (%black_list%) do (
+				for %%w in (%black_list%) do (
 					if not "x!row:%%w=!"=="x!row!" (
 						set "is_filtered="
 					)
-				))
+				)
 
 				if defined is_filtered (
 					set /a "channels_count=!channels_count!+1"
