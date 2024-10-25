@@ -23,7 +23,7 @@ SETLOCAL ENABLEDELAYEDEXPANSION
 
 		if "!row:~0,7!"=="#EXTINF" (
 			rem problem with ampersand
-			set "row=!row:&=!"
+			set "row=!row:&=^&!"
 
 			echo:!row!| findstr /i /r /c:"[1-9]k$" /c:"[1-9]k[ ]" /c:"hd$" /c:"hd[ ]" >nul 2>&1
 			if errorlevel 1 (
