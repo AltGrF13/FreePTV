@@ -11,9 +11,7 @@ cd /d %LOGANET_PATH%
 git pull
 echo/
 
-rem #EXTM3U from LoganetXAll
-set /p extm3u=< %LOGANET_PATH%\LoganetXAll.m3u
->%FINAL_FILE% echo %extm3u%
+>%FINAL_FILE% echo:#EXTM3U url-tvg="https://iptvx.one/EPG"
 rem echo without newline
 <nul set /p =%FINAL_FILE% is created
 
