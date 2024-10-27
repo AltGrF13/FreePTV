@@ -1,25 +1,25 @@
 @echo off
-set "loganet_path=d:\Project\LoganetXIPTV"
-set "playlists=LoganetXAll"
-set "black_list=Общие Детские Новости Политические Хобби Религия Спорт Музыка"
-set "final_file=\\192.168.1.1\Flash\IPTV.m3u8"
+set "LOGANET_PATH=d:\Project\LoganetXIPTV"
+set "PLAYLISTS=LoganetXAll"
+set "BLACK_LIST=Общие Детские Новости Политические Хобби Религия Спорт Музыка"
+set "FINAL_FILE=\\192.168.1.1\Flash\IPTV.m3u8"
 set LB=^
 
 
-cd /d %loganet_path%
+cd /d %LOGANET_PATH%
 git pull
 echo/
 
 rem #EXTM3U from LoganetXAll
-set /p extm3u=< %loganet_path%\LoganetXAll.m3u
->%final_file% echo %extm3u%
+set /p extm3u=< %LOGANET_PATH%\LoganetXAll.m3u
+>%FINAL_FILE% echo %extm3u%
 rem echo without newline
-<nul set /p =%final_file% is created
+<nul set /p =%FINAL_FILE% is created
 
 SETLOCAL ENABLEDELAYEDEXPANSION
-for %%n in (%playlists%) do (
+for %%n in (%PLAYLISTS%) do (
 	set /a "channels_count=0"
-	set "playlist_path=%loganet_path%\%%n.m3u"
+	set "playlist_path=%LOGANET_PATH%\%%n.m3u"
 	(for /f "skip=1 delims=" %%r in (!playlist_path!) do (
 		set "row=%%r"
 
@@ -30,7 +30,7 @@ for %%n in (%playlists%) do (
 				set "is_filtered="
 			) else (
 				set "is_filtered=true"
-				for %%c in (%black_list%) do (
+				for %%c in (%BLACK_LIST%) do (
 					if not "x!row:%%c=!"=="x!row!" (
 						set "is_filtered="
 					)
@@ -45,7 +45,7 @@ for %%n in (%playlists%) do (
 		if defined is_filtered (
 			echo:%%r
 		)
-	))>>%final_file%
+	))>>%FINAL_FILE%
 
 	<nul set /p =,!LB! filled with !channels_count! high-quality channels from "!playlist_path!"
 )
