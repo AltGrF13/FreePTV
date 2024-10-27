@@ -1,26 +1,30 @@
 @echo off
-set "LOGANET_PATH=d:\Project\LoganetXIPTV"
-set "PLAYLISTS=LoganetXAll"
+set "PLAYLISTS=https://raw.githubusercontent.com/blackbirdstudiorus/LoganetXIPTV/refs/heads/main/LoganetXAll.m3u https://raw.githubusercontent.com/blackbirdstudiorus/LoganetXIPTV/refs/heads/main/LoganetXStrawberry.m3u"
 set FAVORITES="Viju Nature HD","Animal Planet HD"
 set "BLACK_LIST=Общие Детские Новости Политические Хобби Религия Спорт Музыка"
 set "FINAL_FILE=\\192.168.1.1\Flash\IPTV.m3u8"
 set LB=^
 
 
-cd /d %LOGANET_PATH%
-git pull
-echo/
+SETLOCAL ENABLEDELAYEDEXPANSION
+cd /d %~dp0
+
+if exist "*.m3u" (
+	del /f *.m3u
+	echo:*.m3u are deleted in "%~dp0"
+)
+
+for %%p in (%PLAYLISTS%) do (
+	curl -O %%p
+)
 
 >%FINAL_FILE% echo:#EXTM3U url-tvg="https://iptvx.one/EPG"
 rem echo without newline
 <nul set /p =%FINAL_FILE% is created
 
-SETLOCAL ENABLEDELAYEDEXPANSION
-
-for %%n in (%PLAYLISTS%) do (
+for /r %~dp0 %%f in (*.m3u) do (
 	set /a "channels_count=0"
-	set "playlist_path=%LOGANET_PATH%\%%n.m3u"
-	(for /f "skip=1 delims=" %%r in (!playlist_path!) do (
+	(for /f "skip=1 delims=" %%r in (%%f) do (
 		set "row=%%r"
 
 		if "!row:~0,7!"=="#EXTINF" (
@@ -43,12 +47,11 @@ for %%n in (%PLAYLISTS%) do (
 		)
 	))>>%FINAL_FILE%
 
-	<nul set /p =,!LB! filled with !channels_count! favorites channels from "!playlist_path!"
+	<nul set /p =,!LB! filled with !channels_count! favorites channels from "%%f"
 )
-for %%n in (%PLAYLISTS%) do (
+for /r %~dp0 %%f in (*.m3u) do (
 	set /a "channels_count=0"
-	set "playlist_path=%LOGANET_PATH%\%%n.m3u"
-	(for /f "skip=1 delims=" %%r in (!playlist_path!) do (
+	(for /f "skip=1 delims=" %%r in (%%f) do (
 		set "row=%%r"
 
 		if "!row:~0,7!"=="#EXTINF" (
@@ -75,6 +78,6 @@ for %%n in (%PLAYLISTS%) do (
 		)
 	))>>%FINAL_FILE%
 
-	<nul set /p =,!LB! filled with !channels_count! high-quality channels from "!playlist_path!"
+	<nul set /p =,!LB! filled with !channels_count! high-quality channels from "%%f"
 )
 echo:.
