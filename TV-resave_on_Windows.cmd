@@ -9,6 +9,11 @@ set LB=^
 SETLOCAL ENABLEDELAYEDEXPANSION
 cd /d %~dp0
 
+set "RUN_FILENAME=TV-resave_and_run_on_Windows.cmd"
+if not exist "%RUN_FILENAME%" (
+	curl -O "https://raw.githubusercontent.com/AltGrF13/FreePTV/refs/heads/main/%RUN_FILENAME%"
+)
+
 if exist "*.m3u" (
 	del /f *.m3u
 	echo:*.m3u are deleted in "%~dp0"
