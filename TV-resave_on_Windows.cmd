@@ -30,9 +30,8 @@ for %%n in (%playlists%) do (
 				set "is_filtered="
 			) else (
 				set "is_filtered=true"
-
-				for %%w in (%black_list%) do (
-					if not "x!row:%%w=!"=="x!row!" (
+				for %%c in (%black_list%) do (
+					if not "x!row:%%c=!"=="x!row!" (
 						set "is_filtered="
 					)
 				)
